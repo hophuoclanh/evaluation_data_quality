@@ -1,15 +1,14 @@
 import pandas as pd
-from sklearn.neighbors import NearestNeighbors
 import numpy as np
-from collections import Counter
-from sklearn.datasets import make_classification
 from imblearn.under_sampling import TomekLinks
-import cle
 
 data = pd.read_csv('DATA.csv')
 df = data.drop(columns='STUDENT ID')
+
+# select data example 'GRADE'
 X = df.drop(columns='GRADE')
 y = df['GRADE']
+
 def Class_Overlap(x,y):
     tl = TomekLinks()
     x_res, y_res = tl.fit_resample(x, y)
