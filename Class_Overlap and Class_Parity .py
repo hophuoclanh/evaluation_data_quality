@@ -30,5 +30,3 @@ def Class_Parity(Ci):
     return QoD_CP
 QoD_CP =   Class_Parity(y)
 print('Class Parity =', QoD_CP)
-
-def
