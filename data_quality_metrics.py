@@ -1,5 +1,6 @@
 import numpy as np
-
+from imblearn.under_sampling import TomekLinks
+from cleanlab.filter import find_label_issues
 
 def feature_correlation(dataframe):
     """
@@ -69,3 +70,36 @@ def completeness(dataframe):
 
     QoD_Com = 1 - null_count / total_count
     return QoD_Com
+
+def label_purity(X, y, pred_probs):
+    """
+        Calculate the label purity metric for a given set of data points, true labels, and predicted probabilities.
+
+        Args:
+        - X (array-like): The input data points.
+        - y (array-like): The true labels of the data points.
+        - pred_probs (array-like): The predicted probabilities for each data point.
+
+        Returns:
+        - float: The label purity value, computed as QoD_lp.
+        """
+    # Using is_tomek_link from imbalanced-learn
+    tl = TomekLinks()
+    _, y_resampled = tl.fit_resample(X, y)
+
+    # Get indices of Tomek links
+    tomek_indices = tl.sample_indices_
+
+    # Using find_label_issues from cleanlab
+    label_issue_indices = find_label_issues(
+        labels=y,
+        pred_probs=pred_probs,
+        return_indices_ranked_by='self_confidence'
+    )
+
+    intersection = len(set(tomek_indices) & set(label_issue_indices))
+
+    # Compute the label purity as per the formula
+    QoD_LP = 1 - (intersection / len(y))
+
+    return QoD_LP
