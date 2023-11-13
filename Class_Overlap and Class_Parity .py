@@ -1,7 +1,5 @@
 import pandas as pd
 import numpy as np
-from imblearn.under_sampling import TomekLinks
-from sklearn.neighbors import NearestNeighbors
 
 tl = TomekLinks
 
