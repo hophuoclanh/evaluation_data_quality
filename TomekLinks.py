@@ -5,7 +5,7 @@ def tomek_links(X,y):
     for i in range(len(X)):
         for j in range(i+1, len(X)):
             if y[i] != y[j]:  # Check if they have different labels
-                distance_ij = np.linalg.norm(X[i] - X[j])  # Euclidean distance between x[i] and x[j]
+                distance_ij = np.linalg.norm(X[i] - X[j])  # distance between x[i] and x[j]
                 is_tomek_link = True
                 for k in range(len(X)):
                     if y[i] != y[k] and np.linalg.norm(X[i] - X[k]) < distance_ij:
